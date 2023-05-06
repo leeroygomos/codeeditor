@@ -1,22 +1,40 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
+// import './App.css';
+
+// Bootstrap Components
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+// Custom Components
+import Editor from './components/Editor.js';
+import Header from './components/Header.js';
+import Output from './components/Output.js';
 
 function App() {
-  const [value, setValue] = useState([{}]);
+  const [language, setLanguage] = useState("Javascript");
+  const [output, setOutput] = useState("");
+  // const [console, setConsole] = useState("");
 
-  useEffect(()=>{
-    fetch("http://localhost:3000").then(response => 
-      response.json()).then(data => {
-        setValue(data)
-      });
-  },[]);
+  const execute = (code) => {
+    fetch('http://localhost:3000/execute?' + new URLSearchParams({
+        code: code,
+        language: language
+      }))
+      .then(res => res.json())
+      .then(data => setOutput(data.output))
+  }
 
   return (
-    <div className="App">
-      {(typeof value.hi === 'undefined') ? (<p>Loading</p>):
-      
-      (value.hi.map((val,i) => <p key={i}>{val}</p>))}
-    </div>
+    <Container fluid>
+        <Row>
+            <Col style={{backgroundColor:"black"}}><Header setLanguage={setLanguage} language={language} execute={execute}></Header></Col>
+        </Row>
+        <Row>
+            <Col style={{backgroundColor:"grey"}}><Editor execute={execute}></Editor></Col>
+            <Col style={{backgroundColor:"grey"}}><Output output={output}></Output></Col>
+        </Row>
+    </Container>
   );
 }
 
