@@ -1,28 +1,29 @@
-import {useState} from 'react';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
+import React, {useState} from 'react';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import Button from 'react-bootstrap/Button';
 
+export default function Editor({language, execute}){
 
-export default function Editor({execute}){
     const [code, setCode] = useState(
-        `function add(a, b) {\n  return a + b;\n}`
+        `console.log('hello world!');`
       );
     return (
-        <div data-color-mode="dark">
+        <div data-color-mode="dark" style={{marginTop:'15px', height: '90vh'}}>
             <CodeEditor
                 value={code}
-                language="javascript"
+                language={language === 'C++' ? 'cpp' : language}
                 placeholder="Please enter JS code."
                 onChange={(evn) => setCode(evn.target.value)}
-                padding={10}
                 style={{
-                    fontSize: 12,
+                    fontSize: 16,
                     fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                    height: '85vh',
+                    overflowY: 'auto',
+                    marginBottom: '10px',
+                    borderRadius: '10px'
                 }}
             />
-            <Button variant="primary" onClick={() => execute(code)}>Run</Button>
+            <Button variant="primary" onClick={() => execute(code)} style={{float: 'right'}}>Run</Button>
         </div>
         
     );

@@ -1,34 +1,42 @@
+import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
-export default function Output({output}){
+export default function Output({errors, output}){
     return (
         <>
-            <Container fluid>
-                <Row>
-                    <Col xs sm={8}>
-                        Console
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs lg="2">
-                        Console
-                    </Col>
-                </Row>
-            </Container>
-            <Container fluid>
-                <Row>
-                    <Col xs sm={8}>
-                        Console
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs lg="2">
-                        {output}
-                    </Col>
-                </Row>
-            </Container>
+            <div style={{
+                    display: 'grid',
+                    height: '90vh',
+                    marginTop:'15px'
+                }}>
+                <Container>
+                    <CodeEditor
+                        readOnly
+                        value={errors}
+                        placeholder="Errors"
+                        style={{
+                            fontSize: 16,
+                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                            height: '40vh',
+                            borderRadius: '10px'
+                        }}
+                    />
+                </Container>
+                <Container>
+                    <CodeEditor
+                        readOnly
+                        value={output}
+                        placeholder="Output"
+                        style={{
+                            fontSize: 16,
+                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                            height: '40vh',
+                            borderRadius: '10px'
+                        }}
+                    />
+                </Container>
+            </div>
         </>
     );
 }
