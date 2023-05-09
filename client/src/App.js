@@ -9,16 +9,23 @@ import Col from 'react-bootstrap/Col';
 import Editor from './components/Editor.js';
 import Header from './components/Header.js';
 import Output from './components/Output.js';
+import Footer from './components/Footer.js';
 
 const PORT = process.env.PORT || 3000;
+
+const DARK_BODY = 'linear-gradient(#000B18, #000B18, #000B18, #00172D)';
+const DARK_HEADER = 'linear-gradient(#000B18, #21201E)';
+const LIGHT_BODY = 'linear-gradient(#ddeaee, #8cacd0, #709fdc, #274684)';
+const LIGHT_HEADER = 'linear-gradient(#FFFFFF, #ddeaee)';
 
 function App() {
   const [language, setLanguage] = useState("Javascript");
   const [output, setOutput] = useState("");
   const [errors, setErrors] = useState("");
+  const [mode, setMode] = useState("dark");
 
   const execute = (code) => {
-    fetch(`http://localhost:${PORT}/execute?` + new URLSearchParams({
+    fetch('https://online-code-editor.herokuapp.com/execute?' + new URLSearchParams({
         code: code,
         language: language
       }))
@@ -30,15 +37,18 @@ function App() {
   }
 
   return (
+    <>
     <Container fluid>
         <Row>
-            <Col style={{backgroundImage:'linear-gradient(#000B18, #21201E)'}}><Header setLanguage={setLanguage} language={language} execute={execute}></Header></Col>
+            <Col style={{backgroundImage:(mode === 'dark' ? DARK_HEADER : LIGHT_HEADER)}}><Header setLanguage={setLanguage} language={language} execute={execute} setGlobalMode={setMode}></Header></Col>
         </Row>
         <Row>
-            <Col style={{backgroundImage: 'linear-gradient(#000B18, #000B18, #000B18, #00172D)'}}><Editor execute={execute} language={language}></Editor></Col>
-            <Col style={{backgroundImage: 'linear-gradient(#000B18, #000B18, #000B18, #00172D)'}}><Output output={output} errors={errors}></Output></Col>
+            <Col style={{backgroundImage: (mode === 'dark' ? DARK_BODY : LIGHT_BODY)}}><Editor execute={execute} language={language} mode={mode}></Editor></Col>
+            <Col style={{backgroundImage: (mode === 'dark' ? DARK_BODY : LIGHT_BODY)}}><Output output={output} errors={errors} mode={mode}></Output></Col>
         </Row>
     </Container>
+    <Footer mode={mode}></Footer>
+    </>
   );
 }
 
