@@ -11,7 +11,7 @@ import Header from './components/Header.js';
 import Output from './components/Output.js';
 import Footer from './components/Footer.js';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const DARK_BODY = 'linear-gradient(#000B18, #000B18, #000B18, #00172D)';
 const DARK_HEADER = 'linear-gradient(#000B18, #21201E)';
@@ -23,9 +23,9 @@ function App() {
   const [output, setOutput] = useState("");
   const [errors, setErrors] = useState("");
   const [mode, setMode] = useState("dark");
-
+  
   const execute = (code) => {
-    fetch('https://online-code-editor.herokuapp.com/execute?' + new URLSearchParams({
+    fetch(`https://online-code-editor.herokuapp.com/execute?` + new URLSearchParams({
         code: code,
         language: language
       }))

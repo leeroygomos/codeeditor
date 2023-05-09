@@ -22,7 +22,7 @@ export default function Editor({language, execute, mode}){
         <div data-color-mode={mode} style={{marginTop:'15px', height: '90vh'}}>
             <CodeEditor
                 value={code}
-                language={language === 'C++' ? 'cpp' : language}
+                language={(language === 'C++' || language === 'C#') ? ((language === 'C++') ? 'cpp' : 'csharp') : language}
                 placeholder={placeholder}
                 onChange={(evn) => setCode(evn.target.value)}
                 style={{

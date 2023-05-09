@@ -12,6 +12,14 @@ RUN apt-get install -y python3
 
 RUN apt-get -y install gcc
 
+RUN apt-get -y install mono-complete
+
+RUN apt-get -y install default-jdk
+
+RUN apt-get -y install golang-go
+
+RUN apt-get -y install rustc
+
 COPY . .
 
 ENV PORT=3000
