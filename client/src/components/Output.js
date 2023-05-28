@@ -6,9 +6,10 @@ export default function Output({errors, output, mode}){
     return (
         <>
             <div style={{
-                    display: 'grid',
-                    height: '90vh',
-                    marginTop:'15px'
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '2vh',
+                    paddingTop: '2vh',
                 }}>
                 <Container>
                     <CodeEditor

@@ -23,7 +23,6 @@ function App() {
   const [output, setOutput] = useState("");
   const [errors, setErrors] = useState("");
   const [mode, setMode] = useState("dark");
-  
   const execute = (code) => {
     fetch(`https://online-code-editor.herokuapp.com/execute?` + new URLSearchParams({
         code: code,
@@ -40,11 +39,17 @@ function App() {
     <>
     <Container fluid>
         <Row>
-            <Col style={{backgroundImage:(mode === 'dark' ? DARK_HEADER : LIGHT_HEADER)}}><Header setLanguage={setLanguage} language={language} execute={execute} setGlobalMode={setMode}></Header></Col>
+            <Col style={{backgroundImage:(mode === 'dark' ? DARK_HEADER : LIGHT_HEADER)}}>
+              <Header setLanguage={setLanguage} language={language} execute={execute} setGlobalMode={setMode}></Header>
+            </Col>
         </Row>
         <Row>
-            <Col style={{backgroundImage: (mode === 'dark' ? DARK_BODY : LIGHT_BODY)}}><Editor execute={execute} language={language} mode={mode}></Editor></Col>
-            <Col style={{backgroundImage: (mode === 'dark' ? DARK_BODY : LIGHT_BODY)}}><Output output={output} errors={errors} mode={mode}></Output></Col>
+            <Col style={{backgroundImage: (mode === 'dark' ? DARK_BODY : LIGHT_BODY), resize:'both'}}>
+                <Editor execute={execute} language={language} mode={mode}></Editor>
+              </Col>
+            <Col style={{backgroundImage: (mode === 'dark' ? DARK_BODY : LIGHT_BODY)}}>
+              <Output output={output} errors={errors} mode={mode}></Output>
+            </Col>
         </Row>
     </Container>
     <Footer mode={mode}></Footer>

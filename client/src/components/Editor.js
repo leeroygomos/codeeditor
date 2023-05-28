@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import Button from 'react-bootstrap/Button';
+import getBoilerplate from './Boilerplate';
 
 export default function Editor({language, execute, mode}){
 
     const [code, setCode] = useState(
-        `console.log('hello world!');`
+        getBoilerplate(language)
     );
 
     const [placeholder, setPlaceholder] = useState(
-        "Enter Javascript code"
+        `Enter ${language} code`
     );
 
     useEffect(() => {
-        let ph = "Enter " + language + " code";
-        setPlaceholder(ph);
+        setPlaceholder(`Enter ${language} code`);
+        setCode(getBoilerplate(language));
     },[language]);
 
-
     return (
-        <div data-color-mode={mode} style={{marginTop:'15px', height: '90vh'}}>
+        <div data-color-mode={mode} style={{marginTop:'2vh', height: '85vh'}}>
             <CodeEditor
                 value={code}
                 language={(language === 'C++' || language === 'C#') ? ((language === 'C++') ? 'cpp' : 'csharp') : language}
@@ -28,7 +28,7 @@ export default function Editor({language, execute, mode}){
                 style={{
                     fontSize: 16,
                     fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                    height: '85vh',
+                    height: '82vh',
                     overflowY: 'auto',
                     marginBottom: '10px',
                     borderRadius: '10px'
@@ -36,6 +36,5 @@ export default function Editor({language, execute, mode}){
             />
             <Button variant="primary" onClick={() => execute(code)} style={{float: 'right'}}>Run</Button>
         </div>
-        
     );
 }
